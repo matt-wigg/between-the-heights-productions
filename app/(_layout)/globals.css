@@ -70,15 +70,14 @@ nav {
   flex-direction: column;
   text-align: center;
   padding: 2rem;
-  border-top: 1px solid #ffffff;
+  border-bottom: 1px solid #ffffff;
   transition: 0.5s;
 }
 header {
   color: #0092f3;
   font-weight: 900;
   font-size: 2rem;
-  padding-top: 5rem;
-  padding-bottom: 2rem;
+  padding-bottom: 1rem;
 }
 @keyframes slideUp {
   0% {
@@ -104,6 +103,13 @@ header {
   }
   section {
     width: 60%;
+  }
+  header {
+    color: #0092f3;
+    font-weight: 900;
+    font-size: 2rem;
+    padding-top: 5rem;
+    padding-bottom: 2rem;
   }
 }
 /* dark mode */
