@@ -11,9 +11,13 @@ export default function Nav() {
         {
           // Loop through navData and create a list item for each navItem
           navData.navItems.map((item) => (
-            <li key={item.id} data-name={item.label}>
-              <Link href={item.url}>{item.label}</Link>
-            </li>
+            <>
+              <Link href={item.url}>
+                <li key={item.id} data-name={item.label}>
+                  {item.label}
+                </li>
+              </Link>
+            </>
           ))
         }
       </ul>

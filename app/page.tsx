@@ -4,9 +4,9 @@ export default function Home() {
       <h1>
         Welcome to <br />
         <a href='/'>
-          Between The Heights <br />
-          Productions
+          Between The Heights <br />{' '}
         </a>
+        Productions
       </h1>
       <p>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris quis

@@ -48,20 +48,36 @@ ul {
 }
 li {
   padding: 0.5rem;
+  border: #ffffff 1px solid;
+  background-color: transparent;
+  border-radius: 0.5rem;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+li:hover {
+  /* background-color: #ffffff; */
+  color: #0092f3;
+  border: #ffffff 1px solid;
+  background-color: #ffffff;
 }
 li[data-name='Productions'] {
   color: #0092f3;
-  font-style: bold;
-  font-weight: 900;
+  border: #ffffff 1px solid;
+  background-color: transparent;
+  border-radius: 0.5rem;
+}
+li[data-name='Productions']:hover {
+  color: #ffffff;
+  background-color: #0092f3;
+  border: #0092f3 1px solid;
 }
 /* sidebar */
 nav {
   display: flex;
   flex-direction: column;
   text-align: center;
-  padding: 2rem;
+  padding: 0 1.5rem;
   border-bottom: 1px solid #ffffff;
-  transition: 0.5s;
 }
 header {
   color: #0092f3;
@@ -76,7 +92,7 @@ header {
     left: 0;
     top: 0;
     height: 100vh;
-    padding-top: 2rem;
+    padding-top: 3rem;
     width: 15rem;
     border-right: 0.01rem solid #ffffff;
     border-bottom: 0;
@@ -88,7 +104,7 @@ header {
     color: #0092f3;
     font-weight: 900;
     font-size: 2rem;
-    padding-top: 5rem;
+    padding-top: 3rem;
     padding-bottom: 2rem;
   }
 }
