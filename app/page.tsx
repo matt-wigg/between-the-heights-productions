@@ -2,12 +2,12 @@ export default function Home() {
   return (
     <section>
       <h1>
-        Welcome to <br />
         <a href='/'>
           Between The Heights <br />{' '}
         </a>
         Productions
       </h1>
+      <hr />
       <p>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris quis
         bibendum ex. Proin risus lectus, aliquet ac laoreet id, molestie tempor

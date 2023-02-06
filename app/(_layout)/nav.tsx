@@ -5,8 +5,10 @@ export default function Nav() {
   return (
     <nav>
       <header>
-        <a href='/'>BTH</a>
+        BTH 🎬
+        <hr />
       </header>
+
       <ul>
         {
           // Loop through navData and create a list item for each navItem

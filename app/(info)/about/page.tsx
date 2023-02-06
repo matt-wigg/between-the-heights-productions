@@ -1,7 +1,8 @@
 export default function About() {
   return (
     <section>
-      <h1>About: coming soon...</h1>
+      <h1>About Me:</h1>
+      <hr />
       <p>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris quis
         bibendum ex. Proin risus lectus, aliquet ac laoreet id, molestie tempor
