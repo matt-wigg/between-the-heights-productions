@@ -1,17 +1,28 @@
+:root {
+  font-family: Inter, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu,
+    Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-size: 100%;
+  line-height: 1.75;
+  text-rendering: optimizeSpeed;
+}
+
 html,
 body {
+  height: 100%;
+  color: #e5e5e5;
+  background: #111010;
   padding: 0;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
 hr {
-  border: 1px solid black;
+  border: 1px solid #e5e5e5;
 }
 h1 {
   margin: 0;
   line-height: 1.15;
-  font-size: 3rem;
+  font-size: 2.75rem;
   font-style: normal;
   font-weight: 800;
   letter-spacing: -0.025em;
@@ -26,6 +37,11 @@ h1 a:focus,
 h1 a:active {
   text-decoration: underline;
 }
+b {
+  color: #0092f3;
+  text-decoration: underline;
+  text-underline-offset: 0.3rem;
+}
 a {
   color: inherit;
   text-decoration: none;
@@ -39,6 +55,9 @@ footer {
   flex: 1;
   padding: 2rem;
 }
+p {
+  margin: 1rem 0 2rem;
+}
 footer a {
   display: flex;
   flex-direction: row-reverse;
@@ -51,7 +70,7 @@ ul {
 }
 li {
   padding: 0.5rem;
-  border: black 2px solid;
+  border: #e5e5e5 2px solid;
   background-color: transparent;
   border-radius: 0.5rem;
   margin-bottom: 1rem;
@@ -62,13 +81,6 @@ li:hover {
   border: #e5e5e5 2px solid;
   background-color: #e5e5e5;
 }
-/* li[data-name='Productions'] {
-  color: #0092f3;
-  border: black 2px solid;
-  background-color: transparent;
-  border-radius: 0.5rem;
-}
-*/
 li[data-name='Productions']:hover {
   color: #e5e5e5;
   background-color: #0092f3;
@@ -80,7 +92,7 @@ nav {
   flex-direction: column;
   text-align: center;
   padding: 0 2.5rem;
-  border-bottom: 2px solid black;
+  border-bottom: 2px solid #e5e5e5;
 }
 header {
   font-weight: 900;
@@ -96,7 +108,7 @@ header {
     height: 100vh;
     padding-top: 3rem;
     width: 15rem;
-    border-right: 2px solid black;
+    border-right: 2px solid #e5e5e5;
     border-bottom: 0;
   }
   section {
@@ -143,7 +155,6 @@ header {
     border: #e5e5e5 2px solid;
   } */
   nav {
-    border-bottom: 2px solid #e5e5e5;
   }
 }
 
