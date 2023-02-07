@@ -4,8 +4,11 @@ export default function Home() {
       <h1>Between The Heights Productions</h1>
       <hr />
       <p>
-        Daniel DuVall is a <b>film / video</b> editor and director based in
-        Southern California.
+        Daniel DuVall is a
+        <a href='/productions'>
+          <b>film / video</b>
+        </a>
+        editor and director based in Southern California.
       </p>
       <p>
         Daniel received a Bachelor of Science in Digital Filmmaking & Video
