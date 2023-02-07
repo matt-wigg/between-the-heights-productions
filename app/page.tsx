@@ -4,10 +4,10 @@ export default function Home() {
       <h1>Between The Heights Productions</h1>
       <hr />
       <p>
-        Daniel DuVall is a
+        Daniel DuVall is a{' '}
         <a href='/productions'>
           <b>film / video</b>
-        </a>
+        </a>{' '}
         editor and director based in Southern California.
       </p>
       <p>
