@@ -14,7 +14,6 @@ export default function Nav() {
             height={85}
             priority
           />
-          <hr />
         </header>
       </Link>
       <ul>
