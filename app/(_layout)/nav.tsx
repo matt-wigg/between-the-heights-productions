@@ -12,6 +12,7 @@ export default function Nav() {
             alt='Between The Heights Productions'
             width={100}
             height={100}
+            priority
           />
           <hr />
         </header>
