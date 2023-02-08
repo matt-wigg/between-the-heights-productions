@@ -114,9 +114,14 @@ header {
     width: 15rem;
     border-right: 2px solid #e5e5e5;
     border-bottom: 0;
+    z-index: 100;
   }
   section {
-    width: 60%;
+    min-width: 400px;
+    max-width: 50%;
+    background: transparent;
+    opacity: 90%;
+    z-index: 100;
   }
   header {
     font-weight: 900;
@@ -159,7 +164,7 @@ header {
 
 /* temp video */
 video {
-  position: absolute;
+  position: fixed;
   object-fit: cover;
   left: 0;
   top: 0;
@@ -167,17 +172,16 @@ video {
   height: 100% !important;
   opacity: 15%;
   z-index: -1;
-  opacity: 90%;
   animation-name: fadeInOpacity;
   animation-iteration-count: 1;
   animation-timing-function: ease-in;
-  animation-duration: 1s;
+  animation-duration: 5s;
 }
 @keyframes fadeInOpacity {
   0% {
     opacity: 0;
   }
   100% {
-    opacity: 60%;
+    opacity: 15%;
   }
 }

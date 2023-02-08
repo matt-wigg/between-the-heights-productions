@@ -7,7 +7,6 @@ export default function Home() {
     <section>
       <h1>
         <div className={style.brandTitle}>Between The Heights</div>
-        {/* <div className={style.brandTitle}> </div> */}
         <div>Productions</div>
       </h1>
       <hr />
@@ -76,6 +75,12 @@ export default function Home() {
           Pittsburgh, PA.
         </p>
       </div>
+      <video autoPlay muted loop id='bth-home-reel'>
+        <source
+          src='https://static.videezy.com/system/resources/previews/000/044/479/original/banana.mp4'
+          type='video/mp4'
+        />
+      </video>
     </section>
   );
 }
