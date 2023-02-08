@@ -2,13 +2,13 @@ export const navData = {
   navItems: [
     {
       id: 0,
-      label: 'Bio',
-      url: '/',
+      label: 'Productions',
+      url: '/productions',
     },
     {
       id: 1,
-      label: 'Productions',
-      url: '/productions',
+      label: 'Bio',
+      url: '/',
     },
     {
       id: 2,

@@ -1,7 +1,8 @@
 export default function Home() {
   return (
     <section>
-      <h1>Between The Heights Productions</h1>
+      <h1>Between </h1> <h1>The Heights </h1>
+      <h1>Productions</h1>
       <hr />
       <p>
         Daniel DuVall is a{' '}
