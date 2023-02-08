@@ -91,18 +91,22 @@ li[data-name='Productions']:hover {
   background-color: #7bccfe;
   border: #7bccfe 2px solid;
 }
+section {
+  opacity: 90%;
+}
 /* sidebar */
 nav {
   display: flex;
   flex-direction: column;
   text-align: center;
   padding: 0 2.5rem;
-  border-bottom: 2px solid #e5e5e5;
+  padding-bottom: 1rem;
+  z-index: 100;
 }
 header {
   font-weight: 900;
   font-size: 2rem;
-  padding-top: 1rem;
+  padding-bottom: 1rem;
 }
 /* desktop */
 @media only screen and (min-width: 600px) {
@@ -114,20 +118,18 @@ header {
     width: 15rem;
     border-right: 2px solid #e5e5e5;
     border-bottom: 0;
-    z-index: 100;
   }
   section {
     min-width: 400px;
     max-width: 50%;
     background: transparent;
     opacity: 90%;
-    z-index: 100;
+    z-index: 90;
   }
   header {
     font-weight: 900;
     font-size: 2rem;
     padding-top: 3rem;
-    padding-bottom: 1rem;
   }
 }
 /* dark mode */
@@ -147,11 +149,6 @@ header {
   }
   li {
     border: #e5e5e5 2px solid;
-  }
-  /* li[data-name='Productions'] {
-    border: #e5e5e5 2px solid;
-  } */
-  nav {
   }
 }
 
