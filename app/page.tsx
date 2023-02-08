@@ -26,6 +26,8 @@ export default function Home() {
           <Link
             className={style.linkedin}
             href='https://www.linkedin.com/in/daniel-duvall-47384913b/'
+            rel='noopener noreferrer'
+            target='_blank'
           >
             <div className={style.linkText}>
               <div className={style.text}>LinkedIn</div>
@@ -35,13 +37,20 @@ export default function Home() {
           <Link
             className={style.youtube}
             href='https://www.youtube.com/channel/UCM9fIG9SMJaTTtRhKxxtVaA'
+            rel='noopener noreferrer'
+            target='_blank'
           >
             <div className={style.linkText}>
               <div>YouTube</div>
               <div>↗</div>
             </div>
           </Link>
-          <Link className={style.vimeo} href='https://vimeo.com/user48513860'>
+          <Link
+            className={style.vimeo}
+            href='https://vimeo.com/user48513860'
+            rel='noopener noreferrer'
+            target='_blank'
+          >
             <div className={style.linkText}>
               <div>Vimeo</div>
               <div>↗</div>
