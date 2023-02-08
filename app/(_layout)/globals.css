@@ -18,6 +18,7 @@ body {
 }
 hr {
   border: 1px solid #e5e5e5;
+  margin-bottom: 1.5rem;
 }
 h1 {
   margin: 0;
@@ -31,15 +32,18 @@ h1 {
 }
 h1 a {
   text-decoration: none;
-  color: #0092f3;
+  color: #7bccfe;
 }
 h1 a:hover,
 h1 a:focus,
 h1 a:active {
   text-decoration: underline;
 }
+h2 {
+  padding-bottom: 0.5rem;
+}
 b {
-  color: #0092f3;
+  color: #7bccfe;
   text-decoration: underline;
   text-underline-offset: 0.3rem;
 }
@@ -84,8 +88,8 @@ li:hover {
 }
 li[data-name='Productions']:hover {
   color: #e5e5e5;
-  background-color: #0092f3;
-  border: #0092f3 2px solid;
+  background-color: #7bccfe;
+  border: #7bccfe 2px solid;
 }
 /* sidebar */
 nav {
@@ -118,7 +122,7 @@ header {
     font-weight: 900;
     font-size: 2rem;
     padding-top: 3rem;
-    padding-bottom: 2rem;
+    padding-bottom: 1rem;
   }
 }
 /* dark mode */
@@ -132,18 +136,6 @@ header {
   }
   hr {
     border: 1px solid #e5e5e5;
-  }
-  h1 {
-    background: linear-gradient(180deg, #e5e5e5 0%, #aaaaaa 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-  h1 a {
-    background: linear-gradient(180deg, #0092f3 0%, #0186de 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
   }
   header {
     color: #e5e5e5;
