@@ -10,8 +10,8 @@ export default function Nav() {
           <Image
             src='/bth_logo.png'
             alt='Between The Heights Productions'
-            width={100}
-            height={100}
+            width={85}
+            height={85}
             priority
           />
           <hr />
