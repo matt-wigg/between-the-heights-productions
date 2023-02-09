@@ -13,8 +13,8 @@ body {
   background: #111010;
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  /* font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif; */
 }
 hr {
   border: 1px solid #e5e5e5;
@@ -87,7 +87,7 @@ li:hover {
   background-color: #e5e5e5;
 }
 li[data-name='Productions']:hover {
-  color: #e5e5e5;
+  color: #111010;
   background-color: #7bccfe;
   border: #7bccfe 2px solid;
 }
@@ -167,18 +167,66 @@ video {
   top: 0;
   width: 100% !important;
   height: 100% !important;
-  opacity: 15%;
+  opacity: 40%;
   z-index: -1;
   animation-name: fadeInOpacity;
   animation-iteration-count: 1;
   animation-timing-function: ease-in;
-  animation-duration: 5s;
+  animation-duration: 2s;
 }
 @keyframes fadeInOpacity {
   0% {
     opacity: 0;
   }
   100% {
-    opacity: 15%;
+    opacity: 40%;
   }
+}
+
+/* From Style */
+
+form {
+  background-color: #111010;
+  display: flex;
+  flex-direction: column;
+  border-radius: 0.5rem;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  color: #e5e5e5;
+}
+
+input,
+textarea {
+  background-color: #22211f;
+  color: #e5e5e5;
+  border: none;
+  border-radius: 0.5rem;
+  padding: 0.75rem;
+  margin-bottom: 1.5rem;
+  font-size: 1rem;
+  font-family: Inter, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu,
+    Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+}
+
+textarea {
+  height: 12rem;
+}
+
+button {
+  padding: 1rem;
+  border: #e5e5e5 2px solid;
+  background-color: transparent;
+  border-radius: 0.5rem;
+  margin-bottom: 1rem;
+  font-weight: 500;
+  font-size: 1rem;
+  color: #e5e5e5;
+  cursor: pointer;
+}
+button:hover {
+  color: #111010;
+  background-color: #7bccfe;
+}
+
+*:focus {
+  outline-color: #7bccfe;
 }

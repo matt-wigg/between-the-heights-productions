@@ -7,10 +7,10 @@ export default function Home() {
     <section>
       <h1>
         <div className={style.brandTitle}>Between The Heights</div>
-        <div>Productions</div>
+        <div className={style.brandSubTitle}>Productions</div>
       </h1>
       <hr />
-      <h2>Editing - Directing - Videography</h2>
+      <h2 className={style.danTitles}>Editing - Directing - Videography</h2>
       <div className={style.danProfile}>
         <div className={style.danImage}>
           <Image
