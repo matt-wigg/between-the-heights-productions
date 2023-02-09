@@ -62,7 +62,7 @@ const ContactForm: React.FC = () => {
   return (
     <div>
       <p>
-        You can also use this form to contact me: <br />
+        You can use this form to send me a message: <br />
       </p>
       {isLoading ? (
         <h2>Sending...</h2>
