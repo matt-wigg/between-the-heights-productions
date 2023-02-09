@@ -2,13 +2,15 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { navData } from '../../assets/navData';
 
+import logo from '../../public/bth_logo.png';
+
 export default function Nav() {
   return (
     <nav>
       <Link href='/'>
         <header>
           <Image
-            src='/bth_logo.png'
+            src={logo}
             alt='Between The Heights Productions'
             width={145}
             height={145}
@@ -21,10 +23,8 @@ export default function Nav() {
           // Loop through navData and create a list item for each navItem
           navData.navItems.map((item) => (
             <>
-              <Link href={item.url}>
-                <li key={item.id} data-name={item.label}>
-                  {item.label}
-                </li>
+              <Link key={item.id} href={item.url}>
+                <li data-name={item.label}>{item.label}</li>
               </Link>
             </>
           ))

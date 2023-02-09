@@ -2,6 +2,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import style from './page.module.css';
 
+import DanPhoto from '../public/dan_photo.jpg';
+
 export default function Home() {
   return (
     <section>
@@ -15,10 +17,10 @@ export default function Home() {
         <div className={style.danImage}>
           <Image
             className={style.danImage}
-            src='/dan_photo.jpg'
+            src={DanPhoto}
             alt='Daniel DuVallr'
             fill
-            priority
+            placeholder='blur'
           />
         </div>
         <div className={style.danLinks}>
