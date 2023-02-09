@@ -50,7 +50,7 @@ export default async function handler(
   try {
     const result = await ses.sendEmail(params).promise();
     res.status(200).json({
-      message: 'Your messages was sent successfully - speak soon!',
+      message: 'Your message was sent successfully - speak soon!',
       result,
     });
   } catch (error) {
