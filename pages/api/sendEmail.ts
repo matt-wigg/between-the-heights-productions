@@ -1,6 +1,16 @@
-const AWS = require('aws-sdk');
+import * as AWS from 'aws-sdk';
 
-export default async function handler(req, res) {
+interface RequestBody {
+  name: string;
+  email: string;
+  phone: string;
+  message: string;
+}
+
+export default async function handler(
+  req: { body: RequestBody },
+  res: { status: (statusCode: number) => { json: (json: object) => void } }
+) {
   const { name, email, phone, message } = req.body;
 
   AWS.config.update({
@@ -11,9 +21,9 @@ export default async function handler(req, res) {
 
   const ses = new AWS.SES();
 
-  const params = {
+  const params: AWS.SES.SendEmailRequest = {
     Destination: {
-      ToAddresses: ['betweentheheights@gmail.com'],
+      ToAddresses: ['danielduvall22@gmail.com'],
     },
     Message: {
       Body: {
@@ -31,7 +41,7 @@ export default async function handler(req, res) {
       },
       Subject: {
         Charset: 'UTF-8',
-        Data: `!New Website Message! ${email}`,
+        Data: `!New Website Message from ${email}!`,
       },
     },
     Source: `${name} <betweentheheights@gmail.com>`,
