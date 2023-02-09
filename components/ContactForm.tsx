@@ -17,6 +17,7 @@ const ContactForm: React.FC = () => {
   });
   const [returnMessage, setReturnMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleInputChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -27,11 +28,13 @@ const ContactForm: React.FC = () => {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setErrorMessage('');
+    setIsLoading(true);
 
     console.log(formData);
 
     if (!formData.name || !formData.email || !formData.message) {
       setErrorMessage('Name, email, and message fields are required.');
+      setIsLoading(false);
       return;
     }
 
@@ -47,20 +50,23 @@ const ContactForm: React.FC = () => {
 
       const data = await res.json();
       console.log(data);
+      setIsLoading(false);
       if (!data.error) setReturnMessage(data.message);
       if (data.error) setErrorMessage(data.error.code);
     } catch (error) {
       setErrorMessage('There was a problem connecting to the API');
+      setIsLoading(false);
       console.error(error);
     }
   };
-
   return (
     <div>
       <p>
         You can also use this form to contact me: <br />
       </p>
-      {returnMessage ? (
+      {isLoading ? (
+        <h2>Sending...</h2>
+      ) : returnMessage ? (
         <h2>{returnMessage}</h2>
       ) : (
         <>
@@ -77,6 +83,7 @@ const ContactForm: React.FC = () => {
               value={formData.name}
               onChange={handleInputChange}
               required
+              disabled={isLoading}
             />
             <input
               type='email'
@@ -87,6 +94,7 @@ const ContactForm: React.FC = () => {
               required
               pattern='[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$'
               title='Email@examle.com'
+              disabled={isLoading}
             />
             <input
               type='tel'
@@ -94,6 +102,7 @@ const ContactForm: React.FC = () => {
               placeholder='Phone'
               value={formData.phone}
               onChange={handleInputChange}
+              disabled={isLoading}
             />
             <textarea
               name='message'
@@ -101,8 +110,11 @@ const ContactForm: React.FC = () => {
               value={formData.message}
               onChange={handleInputChange}
               required
+              disabled={isLoading}
             />
-            <button type='submit'>Submit</button>
+            <button type='submit' disabled={isLoading}>
+              {isLoading ? 'Sending...' : 'Submit'}
+            </button>
           </form>
         </>
       )}

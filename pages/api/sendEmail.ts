@@ -49,8 +49,13 @@ export default async function handler(
 
   try {
     const result = await ses.sendEmail(params).promise();
-    res.status(200).json({ message: 'Email sent successfully', result });
+    res.status(200).json({
+      message: 'Your messages was sent successfully - speak soon!',
+      result,
+    });
   } catch (error) {
-    res.status(400).json({ message: 'Email sending failed', error });
+    res
+      .status(400)
+      .json({ message: 'Your message failed to send - you broke it!', error });
   }
 }
