@@ -17,18 +17,23 @@ const EMAIL_SUBJECT = '!New Website Message';
 
 export default async function handler(
   req: { body: RequestBody; method: string },
-  res: { status: (statusCode: number) => { json: (json: object) => void } }
+  res: {
+    status: (statusCode: number) => {
+      json: (json: {
+        message: string;
+        result?: object;
+        error?: object;
+      }) => void;
+    };
+  }
 ) {
-  if (
-    req.method !== 'POST' ||
-    !req.body.name ||
-    !req.body.email ||
-    !req.body.message
-  ) {
-    res
-      .status(405)
-      .json({ message: 'Method not allowed or missing required fields' });
-    return;
+  if (req.method !== 'POST') {
+    return res.status(405).json({ message: 'Method not allowed' });
+  }
+
+  const { name, email, message } = req.body;
+  if (!name || !email || !message) {
+    return res.status(400).json({ message: 'Missing required fields' });
   }
 
   AWS.config.update({
@@ -37,7 +42,6 @@ export default async function handler(
     secretAccessKey: AWS_SECRET_ACCESS_KEY,
   });
 
-  const { name, email, phone, message } = req.body;
   const ses = new AWS.SES();
   const params: AWS.SES.SendEmailRequest = {
     Destination: {
@@ -48,14 +52,12 @@ export default async function handler(
       Body: {
         Text: {
           Charset: 'UTF-8',
-          Data: `
-          You have a new message from your website contact form.\n
-          Here are the details:\n
-          Name: ${name}\n
-          Email: ${email}\n
-          Phone: ${phone}\n
-          Message: ${message}\n 
-          `,
+          Data: `You have a new message from your website contact form.
+          Here are the details:
+          Name: ${name}
+          Email: ${email}
+          Phone: ${req.body.phone || 'Not provided'}
+          Message: ${message}`,
         },
       },
       Subject: {
@@ -72,9 +74,10 @@ export default async function handler(
       message: 'Your message was sent successfully - speak soon!',
       result,
     });
-  } catch (error) {
-    res
-      .status(400)
-      .json({ message: 'Your message failed to send - you broke it!', error });
+  } catch (error: AWS.AWSError | any) {
+    res.status(400).json({
+      message: 'Your message failed to send - please try again later',
+      error: error.message,
+    });
   }
 }
