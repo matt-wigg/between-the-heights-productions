@@ -7,15 +7,27 @@ interface RequestBody {
   message: string;
 }
 
-const AWS_REGION = process.env.AWS_REGION || 'us-east-1';
-const AWS_ACCESS_KEY_ID = process.env.AWS_ACCESS_KEY_ID;
-const AWS_SECRET_ACCESS_KEY = process.env.AWS_SECRET_ACCESS_KEY;
-const FROM_EMAIL = process.env.FROM_EMAIL || 'betweentheheights@gmail.com';
-const TO_EMAIL = process.env.TO_EMAIL || 'betweentheheights@gmail.com';
-const CC_EMAIL = process.env.CC_EMAIL || 'betweentheheights@gmail.com';
-const EMAIL_SUBJECT = '!New Website Message';
+interface EnvironmentVariables {
+  AWS_REGION: string | undefined;
+  AWS_ACCESS_KEY_ID: string | undefined;
+  AWS_SECRET_ACCESS_KEY: string | undefined;
+  FROM_EMAIL: string | undefined;
+  TO_EMAIL: string | undefined;
+  CC_EMAIL: string | undefined;
+  EMAIL_SUBJECT: string | undefined;
+}
 
-export default async function handler(
+const environmentVariables: EnvironmentVariables = {
+  AWS_REGION: process.env.AWS_REGION,
+  AWS_ACCESS_KEY_ID: process.env.AWS_ACCESS_KEY_ID,
+  AWS_SECRET_ACCESS_KEY: process.env.AWS_SECRET_ACCESS_KEY,
+  FROM_EMAIL: process.env.FROM_EMAIL,
+  TO_EMAIL: process.env.TO_EMAIL,
+  CC_EMAIL: process.env.CC_EMAIL,
+  EMAIL_SUBJECT: process.env.EMAIL_SUBJECT,
+};
+
+export default async function sendContactFormEmail(
   req: { body: RequestBody; method: string },
   res: {
     status: (statusCode: number) => {
@@ -32,21 +44,22 @@ export default async function handler(
   }
 
   const { name, email, message } = req.body;
+
   if (!name || !email || !message) {
     return res.status(400).json({ message: 'Missing required fields' });
   }
 
   AWS.config.update({
-    region: AWS_REGION,
-    accessKeyId: AWS_ACCESS_KEY_ID,
-    secretAccessKey: AWS_SECRET_ACCESS_KEY,
+    region: environmentVariables.AWS_REGION,
+    accessKeyId: environmentVariables.AWS_ACCESS_KEY_ID,
+    secretAccessKey: environmentVariables.AWS_SECRET_ACCESS_KEY,
   });
 
   const ses = new AWS.SES();
-  const params: AWS.SES.SendEmailRequest = {
+  const emailParams: AWS.SES.SendEmailRequest = {
     Destination: {
-      CcAddresses: [CC_EMAIL],
-      ToAddresses: [TO_EMAIL],
+      CcAddresses: [environmentVariables.CC_EMAIL || 'invalid-email'],
+      ToAddresses: [environmentVariables.TO_EMAIL || 'invalid-email'],
     },
     Message: {
       Body: {
@@ -62,14 +75,14 @@ export default async function handler(
       },
       Subject: {
         Charset: 'UTF-8',
-        Data: `${EMAIL_SUBJECT} from ${email}`,
+        Data: `${environmentVariables.EMAIL_SUBJECT} from ${email}`,
       },
     },
-    Source: `${name} <${FROM_EMAIL}>`,
+    Source: `${name} <${environmentVariables.FROM_EMAIL}>`,
   };
 
   try {
-    const result = await ses.sendEmail(params).promise();
+    const result = await ses.sendEmail(emailParams).promise();
     res.status(200).json({
       message: 'Your message was sent successfully - speak soon!',
       result,
