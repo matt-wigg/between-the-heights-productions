@@ -7,32 +7,42 @@ interface RequestBody {
   message: string;
 }
 
+const AWS_REGION = process.env.AWS_REGION || 'us-east-1';
+const AWS_ACCESS_KEY_ID = process.env.AWS_ACCESS_KEY_ID;
+const AWS_SECRET_ACCESS_KEY = process.env.AWS_SECRET_ACCESS_KEY;
+const FROM_EMAIL = process.env.FROM_EMAIL || 'betweentheheights@gmail.com';
+const TO_EMAIL = process.env.TO_EMAIL || 'betweentheheights@gmail.com';
+const CC_EMAIL = process.env.CC_EMAIL || 'betweentheheights@gmail.com';
+const EMAIL_SUBJECT = '!New Website Message';
+
 export default async function handler(
   req: { body: RequestBody; method: string },
   res: { status: (statusCode: number) => { json: (json: object) => void } }
 ) {
   if (
-    req.method !== 'POST' &&
-    req.body.name &&
-    req.body.email &&
-    req.body.message === undefined
+    req.method !== 'POST' ||
+    !req.body.name ||
+    !req.body.email ||
+    !req.body.message
   ) {
-    res.status(405).json({ message: 'Method not allowed' });
+    res
+      .status(405)
+      .json({ message: 'Method not allowed or missing required fields' });
     return;
   }
-  const { name, email, phone, message } = req.body;
 
   AWS.config.update({
-    region: 'us-east-1',
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+    region: AWS_REGION,
+    accessKeyId: AWS_ACCESS_KEY_ID,
+    secretAccessKey: AWS_SECRET_ACCESS_KEY,
   });
 
+  const { name, email, phone, message } = req.body;
   const ses = new AWS.SES();
   const params: AWS.SES.SendEmailRequest = {
     Destination: {
-      CcAddresses: ['betweentheheights@gmail.com'],
-      ToAddresses: ['betweentheheights@gmail.com'],
+      CcAddresses: [CC_EMAIL],
+      ToAddresses: [TO_EMAIL],
     },
     Message: {
       Body: {
@@ -50,10 +60,10 @@ export default async function handler(
       },
       Subject: {
         Charset: 'UTF-8',
-        Data: `!New Website Message from ${email}!`,
+        Data: `${EMAIL_SUBJECT} from ${email}`,
       },
     },
-    Source: `${name} <betweentheheights@gmail.com>`,
+    Source: `${name} <${FROM_EMAIL}>`,
   };
 
   try {
