@@ -8,9 +8,18 @@ interface RequestBody {
 }
 
 export default async function handler(
-  req: { body: RequestBody },
+  req: { body: RequestBody; method: string },
   res: { status: (statusCode: number) => { json: (json: object) => void } }
 ) {
+  if (
+    req.method !== 'POST' &&
+    req.body.name &&
+    req.body.email &&
+    req.body.message === undefined
+  ) {
+    res.status(405).json({ message: 'Method not allowed' });
+    return;
+  }
   const { name, email, phone, message } = req.body;
 
   AWS.config.update({
