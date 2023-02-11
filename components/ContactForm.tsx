@@ -69,13 +69,12 @@ const ContactForm: React.FC = () => {
         <h2>Sending...</h2>
       ) : returnMessage ? (
         <h2>{returnMessage}</h2>
+      ) : errorMessage ? (
+        <div style={{ color: 'red' }}>
+          <h2>{errorMessage} - Please try again later.</h2>
+        </div>
       ) : (
         <>
-          {errorMessage && (
-            <p
-              style={{ color: 'red' }}
-            >{`There was an error: ${errorMessage}`}</p>
-          )}
           <form onSubmit={handleSubmit}>
             <input
               type='text'

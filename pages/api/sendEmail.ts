@@ -21,7 +21,7 @@ export default async function handleContactFormSubmission(
       json: (json: {
         message: string;
         result?: object;
-        error?: string;
+        error?: object;
       }) => void;
     };
   }
@@ -72,7 +72,7 @@ export default async function handleContactFormSubmission(
   } catch (error: AWS.AWSError | any) {
     res.status(400).json({
       message: 'Your message failed to send - please try again later',
-      error: error.message,
+      error,
     });
   }
 }
