@@ -4,13 +4,13 @@ import {
   TO_EMAIL,
   CC_EMAIL,
   EMAIL_SUBJECT,
-} from '../../config/enviroments';
-import { configureAWS } from '../../config/aws';
+} from '@/config/enviroments';
+import { configureAWS } from '@/config/aws';
 
 interface RequestBody {
   name: string;
   email: string;
-  phone: string;
+  phone?: string;
   message: string;
 }
 
@@ -18,26 +18,33 @@ export default async function handleContactFormSubmission(
   req: { body: RequestBody; method: string },
   res: {
     status: (statusCode: number) => {
-      json: (json: {
+      send: (json: {
         message: string;
-        result?: object;
-        error?: object;
+        result?: AWS.SES.SendEmailResponse;
+        error?: AWS.AWSError;
       }) => void;
     };
   }
 ) {
+  // Check if request method is POST
   if (req.method !== 'POST') {
-    return res.status(405).json({ message: 'Method not allowed' });
+    return res.status(405).send({ message: 'Method not allowed' });
   }
 
+  // Destructure request body and set default phone value
   const { name, email, message } = req.body;
+  const phone = req.body.phone || 'Not provided';
 
+  // Validate required fields
   if (!name || !email || !message) {
-    return res.status(400).json({ message: 'Missing required fields' });
+    return res.status(400).send({ message: 'Missing required form fields' });
   }
 
+  // Configure AWS and create SES client
   configureAWS();
   const sesClient = new AWS.SES();
+
+  // Define email parameters
   const emailParams: AWS.SES.SendEmailRequest = {
     Destination: {
       CcAddresses: [CC_EMAIL || 'invalid-email'],
@@ -51,7 +58,7 @@ export default async function handleContactFormSubmission(
           Here are the details:
           Name: ${name}
           Email: ${email}
-          Phone: ${req.body.phone || 'Not provided'}
+          Phone: ${phone}
           Message: ${message}`,
         },
       },
@@ -63,15 +70,19 @@ export default async function handleContactFormSubmission(
     Source: `${name} <${FROM_EMAIL}>`,
   };
 
+  // Send email
   try {
     const result = await sesClient.sendEmail(emailParams).promise();
-    res.status(200).json({
-      message: 'Your message was sent successfully - speak soon!',
+
+    // Return success response
+    res.status(200).send({
+      message: 'Your message was sent successfully!',
       result,
     });
   } catch (error: AWS.AWSError | any) {
-    res.status(400).json({
-      message: 'Your message failed to send - please try again later',
+    // Return error response
+    res.status(400).send({
+      message: 'Your message failed to send, please try again later.',
       error,
     });
   }

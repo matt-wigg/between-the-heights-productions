@@ -1,8 +1,8 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { navData } from '../../assets/navData';
+import { navData } from '@/assets/navData';
 
-import logo from '../../public/bth_logo.png';
+import logo from '@/public/bth_logo.png';
 
 export default function Nav() {
   return (

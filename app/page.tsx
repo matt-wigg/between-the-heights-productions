@@ -1,8 +1,8 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import style from './page.module.css';
 
-import DanPhoto from '../public/dan_photo.jpg';
+import DanPhoto from '@/public/dan_photo.jpg';
+import style from './page.module.css';
 
 export default function Home() {
   return (
