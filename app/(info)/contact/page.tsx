@@ -6,10 +6,17 @@ export default function Contact() {
       <h1>Contact Me:</h1>
       <hr />
       <p>
-        <b>Email:</b>{' '}
-        <a href='mailto: danielduvall22@gmail.com'>danielduvall22@gmail.com</a>
+        Email:{' '}
+        <b>
+          <a href='mailto: danielduvall22@gmail.com'>
+            danielduvall22@gmail.com
+          </a>
+        </b>
         <br />
-        <b>Phone:</b> <a href='tel:814-494-0811'>(+1) 814-494-0811</a>
+        Phone:{' '}
+        <b>
+          <a href='tel:814-494-0811'>(+1) 814-494-0811</a>
+        </b>
       </p>
       <ContactForm />
     </section>

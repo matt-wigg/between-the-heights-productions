@@ -20,10 +20,10 @@ export default async function handler(
   });
 
   const ses = new AWS.SES();
-
   const params: AWS.SES.SendEmailRequest = {
     Destination: {
-      ToAddresses: ['danielduvall22@gmail.com'],
+      CcAddresses: ['betweentheheights@gmail.com'],
+      ToAddresses: ['betweentheheights@gmail.com'],
     },
     Message: {
       Body: {
