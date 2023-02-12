@@ -34,7 +34,7 @@ const ContactForm: React.FC = () => {
     console.log(formData);
 
     if (!formData.name || !formData.email || !formData.message) {
-      setErrorMessage('Name, email, and message fields are required.');
+      setErrorMessage('Name, email, and message fields are required to send.');
       setIsLoading(false);
       return;
     }
