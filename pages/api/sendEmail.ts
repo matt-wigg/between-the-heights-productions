@@ -6,23 +6,14 @@ import {
   EMAIL_SUBJECT,
 } from '@/config/enviroments';
 import { configureAWS } from '@/config/aws';
-
-interface RequestBody {
-  name: string;
-  email: string;
-  phone?: string;
-  message: string;
-}
+import { TContactFormRequestBody } from '@/types/contactFormRequestBody';
+import { TContactFormResponse } from '@/types/contactFormResponse';
 
 export default async function handleContactFormSubmission(
-  req: { body: RequestBody; method: string },
+  req: { body: TContactFormRequestBody; method: string },
   res: {
     status: (statusCode: number) => {
-      send: (json: {
-        message: string;
-        result?: AWS.SES.SendEmailResponse;
-        error?: AWS.AWSError;
-      }) => void;
+      send: (json: TContactFormResponse) => void;
     };
   }
 ) {
