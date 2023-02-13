@@ -18,7 +18,7 @@ export default function Home() {
           <Image
             className={style.danImage}
             src={DanPhoto}
-            alt='Daniel DuVallr'
+            alt='Daniel DuVall'
             fill
             placeholder='blur'
           />
