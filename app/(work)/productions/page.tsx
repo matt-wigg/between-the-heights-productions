@@ -4,8 +4,31 @@ export default function Productions() {
       <h1>Productions:</h1>
       <hr />
       <p>
-        Check out the song on Spotify: <br />
-        https://open.spotify.com/track/0fCs8VHKuP5l2nLMJMvlfD?si=ni9b_1H6RM6qN1cMPCas2g
+        <a href='https://www.youtube.com/embed/yA2OQY8Bh54?controls=0'>
+          The David Project - Sizzle Reel
+        </a>
+      </p>
+      <div style={{ paddingTop: '56.25%', position: 'relative' }}>
+        <iframe
+          style={{
+            position: 'absolute',
+            top: '0',
+            left: '0',
+            width: '100%',
+            height: '100%',
+          }}
+          src='https://www.youtube.com/embed/yA2OQY8Bh54'
+          title='YouTube video player'
+          frameBorder='0'
+          allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share'
+          allowFullScreen
+        ></iframe>
+      </div>
+      <p>
+        Check out the song on Spotify:&nbsp;
+        <a href='https://open.spotify.com/track/0fCs8VHKuP5l2nLMJMvlfD?si=ni9b_1H6RM6qN1cMPCas2g'>
+          Uptown Party
+        </a>
       </p>
       <div style={{ paddingTop: '56.25%', position: 'relative' }}>
         <iframe
