@@ -1,8 +1,8 @@
-import Image from 'next/image';
-import Link from 'next/link';
+import Image from "next/image";
+import Link from "next/link";
 
-import DanPhoto from '@/public/dan_photo.jpg';
-import style from './page.module.css';
+import DanPhoto from "@/public/dan_photo.jpg";
+import style from "./page.module.css";
 
 export default function Home() {
   return (
@@ -18,17 +18,17 @@ export default function Home() {
           <Image
             className={style.danImage}
             src={DanPhoto}
-            alt='Daniel DuVall'
+            alt="Daniel DuVall"
             fill
-            placeholder='blur'
+            placeholder="blur"
           />
         </div>
         <div className={style.danLinks}>
           <Link
             className={style.linkedin}
-            href='https://www.linkedin.com/in/daniel-duvall-47384913b/'
-            rel='noopener noreferrer'
-            target='_blank'
+            href="https://www.linkedin.com/in/daniel-duvall-47384913b/"
+            rel="noopener noreferrer"
+            target="_blank"
           >
             <div className={style.linkText}>
               <div className={style.text}>LinkedIn</div>
@@ -37,9 +37,9 @@ export default function Home() {
           </Link>
           <Link
             className={style.youtube}
-            href='https://www.youtube.com/channel/UCM9fIG9SMJaTTtRhKxxtVaA'
-            rel='noopener noreferrer'
-            target='_blank'
+            href="https://www.youtube.com/channel/UCM9fIG9SMJaTTtRhKxxtVaA"
+            rel="noopener noreferrer"
+            target="_blank"
           >
             <div className={style.linkText}>
               <div>YouTube</div>
@@ -48,9 +48,9 @@ export default function Home() {
           </Link>
           <Link
             className={style.vimeo}
-            href='https://vimeo.com/user48513860'
-            rel='noopener noreferrer'
-            target='_blank'
+            href="https://vimeo.com/user48513860"
+            rel="noopener noreferrer"
+            target="_blank"
           >
             <div className={style.linkText}>
               <div>Vimeo</div>
@@ -61,11 +61,27 @@ export default function Home() {
       </div>
       <hr />
       <div>
+        <div style={{ paddingTop: "56.25%", position: "relative" }}>
+          <iframe
+            style={{
+              position: "absolute",
+              top: "0",
+              left: "0",
+              width: "100%",
+              height: "100%",
+            }}
+            src="https://www.youtube.com/embed/M7YusauFAlU?si=7ND7keTm1iT3yVgc"
+            title="YouTube video player"
+            frameBorder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowFullScreen
+          ></iframe>
+        </div>
         <p>
-          Daniel DuVall is <i>(not a Horse, but)</i> a{' '}
-          <a href='/productions'>
+          Daniel DuVall is <i>(not a Horse, but)</i> a{" "}
+          <a href="/productions">
             <b>film / video</b>
-          </a>{' '}
+          </a>{" "}
           editor and director based in Southern California.
         </p>
         <p>
@@ -77,10 +93,10 @@ export default function Home() {
           Pittsburgh, PA.
         </p>
       </div>
-      <video autoPlay muted loop id='bth-home-reel'>
+      <video autoPlay muted loop id="bth-home-reel">
         <source
-          src='https://static.videezy.com/system/resources/previews/000/044/479/original/banana.mp4'
-          type='video/mp4'
+          src="https://static.videezy.com/system/resources/previews/000/044/479/original/banana.mp4"
+          type="video/mp4"
         />
       </video>
     </section>
