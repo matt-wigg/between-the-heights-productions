@@ -1,0 +1,68 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+  gap: clamp(24px, 4vw, 56px);
+  align-items: start;
+}
+
+.title {
+  margin: 0 0 20px;
+  font: 500 clamp(30px, 4.6vw, 46px) / 1.08 var(--font-sans);
+  letter-spacing: -0.02em;
+}
+
+.lead {
+  margin: 0 0 14px;
+  font: 400 15.5px / 1.7 var(--font-sans);
+  color: var(--text-soft);
+  max-width: 58ch;
+  text-wrap: pretty;
+}
+
+.body {
+  margin: 0 0 14px;
+  font: 400 14.5px / 1.7 var(--font-sans);
+  color: var(--text-muted);
+  max-width: 58ch;
+  text-wrap: pretty;
+}
+
+.bodyLast {
+  margin-bottom: 28px;
+}
+
+.facts {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 160px), 1fr));
+  gap: 20px;
+  padding: 22px 0;
+  margin-bottom: 28px;
+}
+
+.facts :global(.meta__label) {
+  margin-bottom: 7px;
+}
+
+.social {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.portraitColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.portrait {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: repeating-linear-gradient(135deg, #15161a 0 10px, #1c1d21 10px 20px);
+}
+
+.portraitImg {
+  object-fit: cover;
+}

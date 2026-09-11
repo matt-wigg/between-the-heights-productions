@@ -1,0 +1,100 @@
+.page {
+  animation: riseIn 0.4s ease both;
+}
+
+.back {
+  padding-top: clamp(24px, 4vw, 40px);
+}
+
+.backLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font: 500 12.5px var(--font-sans);
+  color: var(--text-muted);
+  min-height: 36px;
+}
+
+.backLink:hover {
+  color: var(--text);
+}
+
+.body {
+  padding-top: clamp(16px, 3vw, 28px);
+  padding-bottom: clamp(48px, 7vw, 92px);
+}
+
+.title {
+  margin: 0 0 12px;
+  font: 500 clamp(28px, 4.4vw, 46px) / 1.08 var(--font-sans);
+  letter-spacing: -0.02em;
+}
+
+.summary {
+  margin: 0 0 clamp(24px, 3vw, 36px);
+  font: 400 15.5px / 1.65 var(--font-sans);
+  color: var(--text-soft);
+  max-width: 62ch;
+  text-wrap: pretty;
+}
+
+.player {
+  margin-bottom: clamp(22px, 3vw, 34px);
+}
+
+.meta {
+  margin-bottom: clamp(28px, 4vw, 46px);
+}
+
+.story {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+  gap: clamp(22px, 3vw, 44px);
+}
+
+.storyTitle {
+  margin: 0 0 8px;
+  font: 500 17px var(--font-sans);
+}
+
+.storyBody {
+  margin: 0;
+  font: 400 14px / 1.65 var(--font-sans);
+  color: var(--text-muted);
+  text-wrap: pretty;
+}
+
+.footer {
+  margin-top: clamp(34px, 5vw, 60px);
+  padding-top: 24px;
+  border-top: 1px solid var(--line);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.next {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 4px;
+  color: inherit;
+}
+
+.nextLabel {
+  font: 500 10px var(--font-sans);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+.nextTitle {
+  font: 500 19px var(--font-sans);
+  color: var(--text);
+  transition: color 0.15s ease;
+}
+
+.next:hover .nextTitle {
+  color: var(--accent);
+}

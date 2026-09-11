@@ -1,0 +1,44 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 290px), 1fr));
+  gap: clamp(26px, 4vw, 64px);
+  align-items: start;
+}
+
+.title {
+  margin: 0 0 16px;
+  font: 500 clamp(30px, 4.6vw, 46px) / 1.08 var(--font-sans);
+  letter-spacing: -0.02em;
+}
+
+.lede {
+  margin: 0 0 30px;
+  font: 400 15px / 1.7 var(--font-sans);
+  color: var(--text-muted);
+  max-width: 46ch;
+  text-wrap: pretty;
+}
+
+.details {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-top: 24px;
+  border-top: 1px solid var(--line);
+}
+
+.detailLink {
+  font: 500 15px var(--font-sans);
+  color: var(--accent);
+}
+
+.detailLink:hover {
+  color: var(--accent-light);
+}
+
+.formCard {
+  background: var(--bg-card);
+  border: 1px solid var(--line-card);
+  border-radius: var(--radius);
+  padding: clamp(20px, 3vw, 32px);
+}

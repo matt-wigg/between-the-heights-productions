@@ -1,0 +1,68 @@
+.footer {
+  border-top: 1px solid var(--line);
+  background: var(--bg-footer);
+  position: relative;
+  z-index: 1;
+}
+
+.inner {
+  padding-top: clamp(30px, 4vw, 52px);
+  padding-bottom: clamp(30px, 4vw, 52px);
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr));
+  gap: clamp(22px, 3vw, 40px);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.logo {
+  width: 26px;
+  height: 26px;
+  border-radius: 6px;
+}
+
+.brandName {
+  font: 600 12.5px var(--font-sans);
+  color: var(--text);
+}
+
+.tagline {
+  margin: 0;
+  font: 400 12.5px / 1.65 var(--font-sans);
+  color: var(--text-dim);
+  max-width: 34ch;
+}
+
+.col {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.heading {
+  font: 500 10px var(--font-sans);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+
+.link {
+  font: 400 13px var(--font-sans);
+  color: var(--text-nav);
+  transition: color 0.15s ease;
+}
+
+.link:hover {
+  color: var(--text);
+}
+
+.copyright {
+  font: 400 12px var(--font-sans);
+  color: var(--text-faint);
+  margin-top: 6px;
+}

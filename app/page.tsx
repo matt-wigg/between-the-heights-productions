@@ -1,104 +1,126 @@
-import Image from "next/image";
-import Link from "next/link";
+import Link from 'next/link';
 
-import DanPhoto from "@/public/dan_photo.jpg";
-import style from "./page.module.css";
+import HeroMedia from '@/components/HeroMedia';
+import ProjectCard from '@/components/ProjectCard';
+import { featuredSlugs, getProject, reel } from '@/lib/projects';
+import styles from './home.module.css';
+
+const disciplines = ['Editing', 'Directing', 'Videography', 'Colour and finish'];
+
+const process = [
+  {
+    title: 'Brief and treatment',
+    body: 'A clear plan agreed before the shoot, so the edit is decided in advance rather than discovered later.',
+  },
+  {
+    title: 'Production',
+    body: 'Shooting with the right people for the job, at whatever size the project calls for.',
+  },
+  {
+    title: 'Post and delivery',
+    body: 'Finished and delivered in the formats you need, ready to publish.',
+  },
+];
 
 export default function Home() {
+  const featured = featuredSlugs
+    .map((slug) => getProject(slug))
+    .filter((p): p is NonNullable<typeof p> => p !== undefined);
+
   return (
-    <section>
-      <h1>
-        <div className={style.brandTitle}>Between The Heights</div>
-        <div className={style.brandSubTitle}>Productions</div>
-      </h1>
-      <hr />
-      <h2 className={style.danTitles}>Editing - Directing - Videography</h2>
-      <div className={style.danProfile}>
-        <div className={style.danImage}>
-          <Image
-            className={style.danImage}
-            src={DanPhoto}
-            alt="Daniel DuVall"
-            fill
-            placeholder="blur"
-          />
+    <div className={styles.page}>
+      {/* Hero ----------------------------------------------------------- */}
+      <section className={styles.hero}>
+        <HeroMedia />
+        <div className={`container ${styles.heroContent}`}>
+          <div className={styles.kicker}>
+            <span className="rule" />
+            <span className={styles.kickerText}>Production company, Southern California</span>
+          </div>
+          <h1 className={styles.heroTitle}>
+            A production company for brands, labels and independent film.
+          </h1>
+          <p className={styles.heroLede}>
+            Led by editor and director Daniel DuVall, working from the brief through to the
+            finished master. Brand spots, music videos, listing films and narrative work.
+          </p>
+          <div className={styles.heroActions}>
+            <Link href={`/work/${reel.slug}`} className="btn btn--hero">
+              Watch the 2024 reel<span className="btn__icon">▶</span>
+            </Link>
+            <Link href="/work" className="btn btn--ghost">
+              Selected work
+            </Link>
+          </div>
         </div>
-        <div className={style.danLinks}>
-          <Link
-            className={style.linkedin}
-            href="https://www.linkedin.com/in/daniel-duvall-47384913b/"
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            <div className={style.linkText}>
-              <div className={style.text}>LinkedIn</div>
-              <div className={style.icon}>↗</div>
-            </div>
-          </Link>
-          <Link
-            className={style.youtube}
-            href="https://www.youtube.com/channel/UCM9fIG9SMJaTTtRhKxxtVaA"
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            <div className={style.linkText}>
-              <div>YouTube</div>
-              <div>↗</div>
-            </div>
-          </Link>
-          <Link
-            className={style.vimeo}
-            href="https://vimeo.com/user48513860"
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            <div className={style.linkText}>
-              <div>Vimeo</div>
-              <div>↗</div>
-            </div>
+      </section>
+
+      {/* Disciplines ---------------------------------------------------- */}
+      <section className={styles.band}>
+        <div className={`container ${styles.disciplines}`}>
+          <span className={styles.disciplinesLabel}>Disciplines</span>
+          {disciplines.map((d) => (
+            <span key={d} className={styles.discipline}>
+              {d}
+            </span>
+          ))}
+        </div>
+      </section>
+
+      {/* Selected work -------------------------------------------------- */}
+      <section className={`container ${styles.work}`}>
+        <div className={styles.workHead}>
+          <div>
+            <span className="eyebrow">Selected work</span>
+            <h2 className={styles.workTitle}>Recent projects</h2>
+          </div>
+          <Link href="/work" className="link">
+            All projects <span>→</span>
           </Link>
         </div>
-      </div>
-      <hr />
-      <div>
-        <div style={{ paddingTop: "56.25%", position: "relative" }}>
-          <iframe
-            style={{
-              position: "absolute",
-              top: "0",
-              left: "0",
-              width: "100%",
-              height: "100%",
-            }}
-            src="https://www.youtube.com/embed/M7YusauFAlU?si=7ND7keTm1iT3yVgc"
-            title="YouTube video player"
-            frameBorder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            allowFullScreen
-          ></iframe>
+        <div className="grid">
+          {featured.map((project) => (
+            <ProjectCard key={project.slug} project={project} />
+          ))}
         </div>
-        <p>
-          Daniel DuVall is <i>(not a Horse, but)</i> a{" "}
-          <a href="/productions">
-            <b>film / video</b>
-          </a>{" "}
-          editor and director based in Southern California.
-        </p>
-        <p>
-          Daniel received a Bachelor of Science in Digital Filmmaking & Video
-          Production from the Art Institute of Pittsburgh, and has experience
-          creating short films, music videos, web series, and branded commercial
-          content. His music video for the song &quot;Uptown Party&quot; by The
-          Faintest Glow was featured by &quot;Music From the 412&quot; in
-          Pittsburgh, PA.
-        </p>
-      </div>
-      <video autoPlay muted loop id="bth-home-reel">
-        <source
-          src="https://static.videezy.com/system/resources/previews/000/044/479/original/banana.mp4"
-          type="video/mp4"
-        />
-      </video>
-    </section>
+      </section>
+
+      {/* How we work ---------------------------------------------------- */}
+      <section className={`${styles.band} ${styles.bandBordered}`}>
+        <div className={`container ${styles.process}`}>
+          <div className={styles.processIntro}>
+            <span className="eyebrow">How we work</span>
+            <h2 className={styles.processTitle}>
+              One team from the first conversation to the final master.
+            </h2>
+          </div>
+          <div className={styles.processSteps}>
+            {process.map((step) => (
+              <div key={step.title} className={styles.step}>
+                <h4 className={styles.stepTitle}>{step.title}</h4>
+                <p className={styles.stepBody}>{step.body}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA ------------------------------------------------------------ */}
+      <section className={styles.cta}>
+        <div className={styles.ctaGlow} aria-hidden="true" />
+        <div className={styles.ctaLine} aria-hidden="true" />
+        <div className={`container ${styles.ctaInner}`}>
+          <div>
+            <h2 className={styles.ctaTitle}>Have a project in mind?</h2>
+            <p className={styles.ctaBody}>
+              Tell us what you have in mind and we will tell you what is possible.
+            </p>
+          </div>
+          <Link href="/contact" className={`btn ${styles.ctaButton}`}>
+            Start a project <span>→</span>
+          </Link>
+        </div>
+      </section>
+    </div>
   );
 }

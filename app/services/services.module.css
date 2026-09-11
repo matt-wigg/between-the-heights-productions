@@ -1,0 +1,68 @@
+.lede {
+  margin-bottom: clamp(28px, 4vw, 48px);
+  max-width: 56ch;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 270px), 1fr));
+  gap: clamp(16px, 2vw, 24px);
+  margin-bottom: clamp(32px, 4.5vw, 56px);
+}
+
+.service {
+  background: var(--bg-card);
+  border: 1px solid var(--line-card);
+  border-radius: var(--radius);
+  padding: clamp(22px, 2.6vw, 32px);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.serviceHighlight {
+  border-color: var(--accent-border-strong);
+  box-shadow: 0 0 0 1px rgba(123, 204, 254, 0.1);
+}
+
+.badge {
+  display: inline-flex;
+  align-self: flex-start;
+  font: 500 9.5px var(--font-sans);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent-light);
+  border: 1px solid var(--accent-border-strong);
+  border-radius: 4px;
+  padding: 4px 8px;
+}
+
+.serviceTitle {
+  margin: 0;
+  font: 500 20px / 1.2 var(--font-sans);
+  letter-spacing: -0.012em;
+}
+
+.serviceBody {
+  margin: 0;
+  font: 400 13.5px / 1.65 var(--font-sans);
+  color: var(--text-muted);
+}
+
+.footer {
+  border-top: 1px solid var(--line);
+  padding-top: clamp(24px, 3.5vw, 36px);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.footerText {
+  margin: 0;
+  font: 400 14.5px / 1.65 var(--font-sans);
+  color: var(--text-muted);
+  max-width: 48ch;
+  text-wrap: pretty;
+}

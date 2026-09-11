@@ -1,0 +1,211 @@
+.page {
+  animation: riseIn 0.5s ease both;
+}
+
+/* Hero -------------------------------------------------------------------- */
+
+.hero {
+  position: relative;
+  min-height: clamp(420px, 74vh, 720px);
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+  border-bottom: 1px solid var(--line);
+}
+
+.heroContent {
+  position: relative;
+  width: 100%;
+  padding-top: clamp(40px, 8vw, 84px);
+  padding-bottom: clamp(30px, 5vw, 56px);
+}
+
+.kicker {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.kickerText {
+  font: 500 10.5px var(--font-sans);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent-light);
+}
+
+.heroTitle {
+  margin: 0 0 18px;
+  font: 500 clamp(34px, 6vw, 62px) / 1.06 var(--font-sans);
+  letter-spacing: -0.02em;
+  max-width: 16ch;
+  text-wrap: pretty;
+}
+
+.heroLede {
+  margin: 0 0 26px;
+  font: 400 clamp(15px, 1.5vw, 17.5px) / 1.6 var(--font-sans);
+  color: var(--text-soft);
+  max-width: 56ch;
+  text-wrap: pretty;
+}
+
+.heroActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+/* Bands ------------------------------------------------------------------- */
+
+.band {
+  border-bottom: 1px solid var(--line);
+  background: var(--bg-band);
+  -webkit-backdrop-filter: blur(2px);
+  backdrop-filter: blur(2px);
+}
+
+.bandBordered {
+  border-top: 1px solid var(--line);
+}
+
+.disciplines {
+  padding-top: 22px;
+  padding-bottom: 22px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(14px, 4vw, 52px);
+  align-items: center;
+}
+
+.disciplinesLabel {
+  font: 500 10.5px var(--font-sans);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+.discipline {
+  font: 500 13.5px var(--font-sans);
+  color: var(--text-soft);
+}
+
+/* Selected work ----------------------------------------------------------- */
+
+.work {
+  padding-top: clamp(48px, 7vw, 92px);
+  padding-bottom: clamp(48px, 7vw, 92px);
+}
+
+.workHead {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+  margin-bottom: clamp(22px, 3vw, 34px);
+}
+
+.workHead :global(.eyebrow) {
+  margin-bottom: 10px;
+}
+
+.workTitle {
+  margin: 0;
+  font: 500 clamp(26px, 3.4vw, 38px) / 1.1 var(--font-sans);
+  letter-spacing: -0.018em;
+}
+
+/* How we work ------------------------------------------------------------- */
+
+.process {
+  padding-top: clamp(40px, 6vw, 76px);
+  padding-bottom: clamp(40px, 6vw, 76px);
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+  gap: clamp(22px, 3vw, 44px);
+}
+
+.processIntro {
+  max-width: 34ch;
+}
+
+.processTitle {
+  margin: 0;
+  font: 500 clamp(23px, 2.6vw, 30px) / 1.15 var(--font-sans);
+  letter-spacing: -0.018em;
+  text-wrap: pretty;
+}
+
+.processSteps {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.step {
+  padding-left: 16px;
+  border-left: 1px solid var(--line-soft);
+}
+
+.stepTitle {
+  margin: 0 0 5px;
+  font: 500 15px var(--font-sans);
+}
+
+.stepBody {
+  margin: 0;
+  font: 400 13.5px / 1.6 var(--font-sans);
+  color: var(--text-muted);
+}
+
+/* CTA --------------------------------------------------------------------- */
+
+.cta {
+  background: rgba(10, 10, 12, 0.6);
+  position: relative;
+  overflow: hidden;
+  border-top: 1px solid var(--line);
+}
+
+.ctaGlow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(110% 150% at 8% 0%, rgba(123, 204, 254, 0.1) 0%, transparent 58%);
+}
+
+.ctaLine {
+  position: absolute;
+  left: var(--gutter);
+  top: 0;
+  width: 1px;
+  height: 100%;
+  background: linear-gradient(180deg, transparent, rgba(123, 204, 254, 0.4), transparent);
+}
+
+.ctaInner {
+  position: relative;
+  padding-top: clamp(40px, 6vw, 72px);
+  padding-bottom: clamp(40px, 6vw, 72px);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.ctaTitle {
+  margin: 0 0 8px;
+  font: 500 clamp(22px, 2.8vw, 32px) / 1.15 var(--font-sans);
+  letter-spacing: -0.018em;
+}
+
+.ctaBody {
+  margin: 0;
+  font: 400 14.5px / 1.6 var(--font-sans);
+  color: var(--text-muted);
+}
+
+.ctaButton {
+  padding: 12px 24px;
+}

@@ -1,129 +1,173 @@
 'use client';
 
-import React, { useState } from 'react';
+import { useState, type ChangeEvent, type FormEvent } from 'react';
 
-interface FormData {
-  name: string;
-  email: string;
-  phone: string;
-  message: string;
+import { site } from '@/lib/site';
+import type { TContactFormRequestBody } from '@/types/contactFormRequestBody';
+import styles from './ContactForm.module.css';
+
+type FormData = Required<TContactFormRequestBody>;
+
+interface ApiResponse {
+  message?: string;
+  error?: string;
 }
 
-const ContactForm: React.FC = () => {
-  const [formData, setFormData] = useState<FormData>({
-    name: '',
-    email: '',
-    phone: '',
-    message: '',
-  });
-  const [returnMessage, setReturnMessage] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
+const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
-  const handleInputChange = (
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    setFormData({ ...formData, [event.target.name]: event.target.value });
+const emptyForm: FormData = { name: '', email: '', phone: '', message: '' };
+
+export default function ContactForm() {
+  const [form, setForm] = useState<FormData>(emptyForm);
+  const [error, setError] = useState('');
+  const [sending, setSending] = useState(false);
+  const [sentName, setSentName] = useState<string | null>(null);
+
+  const handleChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = event.target;
+    setForm((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setErrorMessage('');
-    setIsLoading(true);
+    setError('');
 
-    console.log(formData);
+    const name = form.name.trim();
+    const email = form.email.trim();
+    const message = form.message.trim();
 
-    if (!formData.name || !formData.email || !formData.message) {
-      setErrorMessage('Name, email, and message fields are required to send.');
-      setIsLoading(false);
+    if (!name || !email || !message) {
+      setError('Name, email and project details are needed to send.');
+      return;
+    }
+    if (!EMAIL_PATTERN.test(email)) {
+      setError('That email address does not look right.');
       return;
     }
 
+    setSending(true);
     try {
-      const body = await JSON.stringify(formData);
       const res = await fetch('/api/sendEmail', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, phone: form.phone.trim(), message }),
       });
+      const data = (await res.json().catch(() => ({}))) as ApiResponse;
 
-      const data = await res.json();
-      console.log(data);
-      setIsLoading(false);
-      if (!data.error) setReturnMessage(data.message);
-      if (data.error) setErrorMessage(data.error.code);
-    } catch (error) {
-      setErrorMessage('There was a problem connecting to the API');
-      setIsLoading(false);
-      console.error(error);
+      if (!res.ok || data.error) {
+        setError(data.error || 'Your message failed to send. Please try again, or email us directly.');
+        return;
+      }
+
+      setSentName(name.split(' ')[0]);
+    } catch {
+      setError('There was a problem reaching the server. Please try again, or email us directly.');
+    } finally {
+      setSending(false);
     }
   };
-  return (
-    <div>
-      <p>
-        You can use this form to send me a message: <br />
-      </p>
-      {isLoading ? (
-        <h2>Sending...</h2>
-      ) : returnMessage ? (
-        <h2>{returnMessage}</h2>
-      ) : errorMessage ? (
-        <div style={{ color: 'red' }}>
-          <h2>{errorMessage} - Please try again later.</h2>
-        </div>
-      ) : (
-        <>
-          <form onSubmit={handleSubmit}>
-            <input
-              type='text'
-              name='name'
-              placeholder='Name *'
-              value={formData.name}
-              onChange={handleInputChange}
-              required
-              disabled={isLoading}
-            />
-            <input
-              type='email'
-              name='email'
-              placeholder='Email *'
-              value={formData.email}
-              onChange={handleInputChange}
-              required
-              pattern='[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$'
-              title='Email@examle.com'
-              disabled={isLoading}
-            />
-            <input
-              type='tel'
-              name='phone'
-              placeholder='Phone'
-              value={formData.phone}
-              onChange={handleInputChange}
-              disabled={isLoading}
-            />
-            <textarea
-              name='message'
-              placeholder='Message *'
-              value={formData.message}
-              onChange={handleInputChange}
-              required
-              disabled={isLoading}
-            />
-            <button type='submit' disabled={isLoading}>
-              {isLoading ? 'Sending...' : 'Submit'}
-            </button>
-          </form>
-        </>
-      )}
-      <i style={{ color: 'grey' }}>
-        I try and respond to messages within a day or two...
-      </i>{' '}
-      🙈
-    </div>
-  );
-};
 
-export default ContactForm;
+  const reset = () => {
+    setForm(emptyForm);
+    setError('');
+    setSentName(null);
+  };
+
+  if (sentName !== null) {
+    return (
+      <div className={styles.sent} role="status" aria-live="polite">
+        <span className="rule" />
+        <h3 className={styles.sentTitle}>Message sent</h3>
+        <p className={styles.sentBody}>Thanks {sentName}, we will be in touch shortly.</p>
+        <button type="button" onClick={reset} className={styles.sentAgain}>
+          Send another message
+        </button>
+      </div>
+    );
+  }
+
+  return (
+    <form className={styles.form} onSubmit={handleSubmit} noValidate>
+      <div className={styles.field}>
+        <label htmlFor="bth-name" className={styles.label}>
+          Name
+        </label>
+        <input
+          id="bth-name"
+          name="name"
+          type="text"
+          autoComplete="name"
+          placeholder="Your name"
+          value={form.name}
+          onChange={handleChange}
+          disabled={sending}
+          required
+          className={styles.input}
+        />
+      </div>
+
+      <div className={styles.field}>
+        <label htmlFor="bth-email" className={styles.label}>
+          Email
+        </label>
+        <input
+          id="bth-email"
+          name="email"
+          type="email"
+          autoComplete="email"
+          placeholder="you@company.com"
+          value={form.email}
+          onChange={handleChange}
+          disabled={sending}
+          required
+          className={styles.input}
+        />
+      </div>
+
+      <div className={styles.field}>
+        <label htmlFor="bth-phone" className={styles.label}>
+          Phone, optional
+        </label>
+        <input
+          id="bth-phone"
+          name="phone"
+          type="tel"
+          autoComplete="tel"
+          placeholder="(+1) 000-000-0000"
+          value={form.phone}
+          onChange={handleChange}
+          disabled={sending}
+          className={styles.input}
+        />
+      </div>
+
+      <div className={styles.field}>
+        <label htmlFor="bth-msg" className={styles.label}>
+          Project details
+        </label>
+        <textarea
+          id="bth-msg"
+          name="message"
+          placeholder="What you are making, and when you need it"
+          value={form.message}
+          onChange={handleChange}
+          disabled={sending}
+          required
+          className={`${styles.input} ${styles.textarea}`}
+        />
+      </div>
+
+      {error && (
+        <p className={styles.error} role="alert">
+          {error}
+        </p>
+      )}
+
+      <button type="submit" className={styles.submit} disabled={sending}>
+        {sending ? 'Sending…' : 'Send message'}
+      </button>
+
+      <p className={styles.note}>Email works just as well: {site.email}</p>
+    </form>
+  );
+}

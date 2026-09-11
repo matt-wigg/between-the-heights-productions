@@ -1,0 +1,125 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.label {
+  font: 500 11px var(--font-sans);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.input {
+  background: var(--bg);
+  color: var(--text);
+  border: 1px solid var(--line-soft);
+  border-radius: var(--radius);
+  padding: 12px;
+  font-size: 14.5px;
+  min-height: 46px;
+  width: 100%;
+  transition: border-color 0.15s ease;
+}
+
+.input::placeholder {
+  color: var(--text-faint);
+}
+
+.input:focus,
+.input:focus-visible {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.input:disabled {
+  opacity: 0.6;
+}
+
+.textarea {
+  height: 150px;
+  resize: vertical;
+}
+
+.error {
+  margin: 0;
+  font: 400 13px / 1.5 var(--font-sans);
+  color: #ffb4b4;
+  background: rgba(255, 120, 120, 0.08);
+  border: 1px solid rgba(255, 120, 120, 0.3);
+  border-radius: var(--radius);
+  padding: 10px 12px;
+}
+
+.submit {
+  min-height: 48px;
+  padding: 14px;
+  border: 1px solid var(--accent);
+  border-radius: var(--radius);
+  background: transparent;
+  color: var(--accent);
+  font: 500 14px var(--font-sans);
+  cursor: pointer;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease;
+}
+
+.submit:hover:not(:disabled) {
+  background: var(--accent-bg);
+  color: var(--accent-light);
+}
+
+.submit:disabled {
+  opacity: 0.6;
+  cursor: progress;
+}
+
+.note {
+  margin: 0;
+  font: 400 11.5px / 1.55 var(--font-sans);
+  color: var(--text-dim);
+}
+
+/* Sent state -------------------------------------------------------------- */
+
+.sent {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.sentTitle {
+  margin: 0;
+  font: 500 21px var(--font-sans);
+}
+
+.sentBody {
+  margin: 0;
+  font: 400 14px / 1.65 var(--font-sans);
+  color: var(--text-muted);
+}
+
+.sentAgain {
+  font: 500 13px var(--font-sans);
+  color: var(--accent);
+  min-height: 36px;
+  display: inline-flex;
+  align-items: center;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+.sentAgain:hover {
+  color: var(--accent-light);
+}
