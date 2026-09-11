@@ -19,7 +19,7 @@ export default function Header() {
     <header className={styles.header}>
       <div className={`container ${styles.inner}`}>
         <Link href="/" className={styles.brand} aria-label={`${site.name} home`}>
-          <Image src={logo} alt="" width={30} height={30} className={styles.logo} priority />
+          <Image src={logo} alt="" width={40} height={40} className={styles.logo} priority />
           <span className={styles.brandText}>
             <span className={styles.brandName}>{site.shortName}</span>
             <span className={styles.brandSub}>Productions</span>

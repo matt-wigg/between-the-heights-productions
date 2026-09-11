@@ -13,7 +13,7 @@ export default function Footer() {
       <div className={`container ${styles.inner}`}>
         <div>
           <div className={styles.brand}>
-            <Image src={logo} alt="" width={26} height={26} className={styles.logo} />
+            <Image src={logo} alt="" width={32} height={32} className={styles.logo} />
             <span className={styles.brandName}>{site.name}</span>
           </div>
           <p className={styles.tagline}>{site.tagline}</p>

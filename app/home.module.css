@@ -194,6 +194,17 @@
   gap: 24px;
 }
 
+/*
+ * Below the container's max width the container is edge-to-edge, so the
+ * accent line sits exactly where the content starts. Inset the content so
+ * the text and button clear the line.
+ */
+@media (max-width: 1267px) {
+  .ctaInner {
+    padding-left: calc(var(--gutter) + 22px);
+  }
+}
+
 .ctaTitle {
   margin: 0 0 8px;
   font: 500 clamp(22px, 2.8vw, 32px) / 1.15 var(--font-sans);
