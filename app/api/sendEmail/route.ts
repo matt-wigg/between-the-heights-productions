@@ -26,8 +26,18 @@ function headerSafe(value: string): string {
   return value.replace(/[\r\n"<>]/g, ' ').trim();
 }
 
-function json(body: { message?: string; error?: string }, status = 200) {
+function json(body: { message?: string; error?: string; code?: string }, status = 200) {
   return NextResponse.json(body, { status });
+}
+
+/** Short, secret-free description of an SES/SDK failure for logs and clients. */
+function describeError(error: unknown): { code: string; detail: string } {
+  if (error && typeof error === 'object') {
+    const e = error as { name?: unknown; Code?: unknown; message?: unknown };
+    const code = String(e.name || e.Code || 'UnknownError');
+    return { code, detail: typeof e.message === 'string' ? e.message : '' };
+  }
+  return { code: 'UnknownError', detail: String(error) };
 }
 
 export async function POST(request: Request) {
@@ -50,17 +60,27 @@ export async function POST(request: Request) {
     return json({ error: 'That email address does not look right.' }, 400);
   }
 
-  if (!AWS_REGION || !FROM_EMAIL || !TO_EMAIL) {
-    console.error('sendEmail: missing AWS_REGION, FROM_EMAIL or TO_EMAIL environment variables');
-    return json({ error: 'The contact form is not configured. Please email us directly.' }, 500);
+  const missing = Object.entries({
+    'SES_REGION / AWS_REGION': AWS_REGION,
+    'SES_ACCESS_KEY_ID / AWS_ACCESS_KEY_ID': AWS_ACCESS_KEY_ID,
+    'SES_SECRET_ACCESS_KEY / AWS_SECRET_ACCESS_KEY': AWS_SECRET_ACCESS_KEY,
+    FROM_EMAIL,
+    TO_EMAIL,
+  })
+    .filter(([, value]) => !value)
+    .map(([key]) => key);
+
+  if (missing.length > 0) {
+    console.error(`sendEmail: missing environment variables: ${missing.join(', ')}`);
+    return json(
+      { error: 'The contact form is not configured. Please email us directly.', code: 'NotConfigured' },
+      500,
+    );
   }
 
   const client = new SESClient({
     region: AWS_REGION,
-    credentials:
-      AWS_ACCESS_KEY_ID && AWS_SECRET_ACCESS_KEY
-        ? { accessKeyId: AWS_ACCESS_KEY_ID, secretAccessKey: AWS_SECRET_ACCESS_KEY }
-        : undefined,
+    credentials: { accessKeyId: AWS_ACCESS_KEY_ID, secretAccessKey: AWS_SECRET_ACCESS_KEY },
   });
 
   const command = new SendEmailCommand({
@@ -97,8 +117,14 @@ export async function POST(request: Request) {
     await client.send(command);
     return json({ message: 'Your message was sent successfully!' });
   } catch (error) {
-    console.error('sendEmail: SES send failed', error);
-    return json({ error: 'Your message failed to send, please try again later.' }, 502);
+    const { code, detail } = describeError(error);
+    console.error(
+      `sendEmail: SES send failed [${code}] ${detail} (region=${AWS_REGION}, keyId=${AWS_ACCESS_KEY_ID.slice(0, 4)}…, from=${FROM_EMAIL}, to=${TO_EMAIL})`,
+    );
+    // The SES error name (e.g. MessageRejected, InvalidClientTokenId,
+    // AccessDenied) is safe to return and makes the failure diagnosable
+    // from the browser without needing server logs.
+    return json({ error: 'Your message failed to send, please try again later.', code }, 502);
   }
 }
 
