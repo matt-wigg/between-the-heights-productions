@@ -13,6 +13,8 @@ const nextConfig: NextConfig = {
     return [
       // Legacy URL from the previous site.
       { source: '/productions', destination: '/work', permanent: true },
+      // Project removed from the portfolio.
+      { source: '/work/torrey-pines', destination: '/work', permanent: true },
     ];
   },
   async headers() {

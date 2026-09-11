@@ -1,4 +1,4 @@
-export type ProjectCategory = 'Reel' | 'Narrative' | 'Music video' | 'Commercial';
+export type ProjectCategory = 'Reel' | 'Narrative' | 'Music video';
 
 export interface Project {
   slug: string;
@@ -110,32 +110,12 @@ export const projects: Project[] = [
     stillAlt: 'EXP, Friend Like Me performance video',
     source: { kind: 'vimeo', id: '387561971', hash: 'bde7429dfb' },
   },
-  {
-    slug: 'torrey-pines',
-    tag: 'Commercial',
-    category: 'Commercial',
-    title: 'Torrey Pines',
-    subtitle: 'Lynda DuVall, San Diego Realtor',
-    client: 'Lynda DuVall, San Diego Realtor',
-    role: 'Director and editor',
-    year: '2021',
-    deliverables: 'Listing film',
-    summary:
-      'A listing film for a Torrey Pines property, treating the architecture the way a narrative treats a location.',
-    embed: 'https://player.vimeo.com/video/504567581?h=9a3c551f61',
-    brief: 'Sell a high value home to buyers who would only ever see it on a phone screen.',
-    approach:
-      'Moving camera through doorways to keep the spatial logic intact, graded for the light the house actually gets at golden hour.',
-    outcome: 'Reused across the agent’s listing pages and social channels.',
-    stillAlt: 'Torrey Pines listing film',
-    source: { kind: 'vimeo', id: '504567581', hash: '9a3c551f61' },
-  },
 ];
 
 export const reel = projects[0];
 
-/** Projects featured on the home page: David Project, Uptown Party, Torrey Pines. */
-export const featuredSlugs = ['the-david-project', 'uptown-party', 'torrey-pines'];
+/** Projects featured on the home page: David Project, Uptown Party, Friend Like Me. */
+export const featuredSlugs = ['the-david-project', 'uptown-party', 'friend-like-me'];
 
 export function getProject(slug: string): Project | undefined {
   return projects.find((p) => p.slug === slug);

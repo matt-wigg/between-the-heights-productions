@@ -19,8 +19,8 @@ export default function WorkPage() {
       <span className="eyebrow">Work</span>
       <h1 className="page__title">Selected projects</h1>
       <p className="page__lede">
-        Commercial, music and narrative work from 2019 to 2024. Open any project to see how it
-        came together.
+        Music and narrative work from 2020 to 2024. Open any project to see how it came
+        together.
       </p>
 
       <div className="grid grid--wide">
