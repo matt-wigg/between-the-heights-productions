@@ -1,15 +1,7 @@
-import { SESClient, SendEmailCommand } from '@aws-sdk/client-ses';
 import { NextResponse } from 'next/server';
+import { Resend } from 'resend';
 
-import {
-  AWS_ACCESS_KEY_ID,
-  AWS_REGION,
-  AWS_SECRET_ACCESS_KEY,
-  CC_EMAIL,
-  EMAIL_SUBJECT,
-  FROM_EMAIL,
-  TO_EMAIL,
-} from '@/config/enviroments';
+import { env, missingEnv } from '@/config/env';
 import type { TContactFormRequestBody } from '@/types/contactFormRequestBody';
 
 export const runtime = 'nodejs';
@@ -28,16 +20,6 @@ function headerSafe(value: string): string {
 
 function json(body: { message?: string; error?: string; code?: string }, status = 200) {
   return NextResponse.json(body, { status });
-}
-
-/** Short, secret-free description of an SES/SDK failure for logs and clients. */
-function describeError(error: unknown): { code: string; detail: string } {
-  if (error && typeof error === 'object') {
-    const e = error as { name?: unknown; Code?: unknown; message?: unknown };
-    const code = String(e.name || e.Code || 'UnknownError');
-    return { code, detail: typeof e.message === 'string' ? e.message : '' };
-  }
-  return { code: 'UnknownError', detail: String(error) };
 }
 
 export async function POST(request: Request) {
@@ -60,16 +42,7 @@ export async function POST(request: Request) {
     return json({ error: 'That email address does not look right.' }, 400);
   }
 
-  const missing = Object.entries({
-    'SES_REGION / AWS_REGION': AWS_REGION,
-    'SES_ACCESS_KEY_ID / AWS_ACCESS_KEY_ID': AWS_ACCESS_KEY_ID,
-    'SES_SECRET_ACCESS_KEY / AWS_SECRET_ACCESS_KEY': AWS_SECRET_ACCESS_KEY,
-    FROM_EMAIL,
-    TO_EMAIL,
-  })
-    .filter(([, value]) => !value)
-    .map(([key]) => key);
-
+  const missing = missingEnv();
   if (missing.length > 0) {
     console.error(`sendEmail: missing environment variables: ${missing.join(', ')}`);
     return json(
@@ -78,54 +51,37 @@ export async function POST(request: Request) {
     );
   }
 
-  const client = new SESClient({
-    region: AWS_REGION,
-    credentials: { accessKeyId: AWS_ACCESS_KEY_ID, secretAccessKey: AWS_SECRET_ACCESS_KEY },
+  const resend = new Resend(env.RESEND_API_KEY);
+
+  const { data, error } = await resend.emails.send({
+    from: env.RESEND_FROM_EMAIL,
+    to: [env.CONTACT_TO_EMAIL],
+    cc: env.CONTACT_CC_EMAIL ? [env.CONTACT_CC_EMAIL] : undefined,
+    replyTo: email,
+    subject: `${env.CONTACT_SUBJECT} from ${headerSafe(name)}`,
+    text: [
+      'You have a new message from your website contact form.',
+      '',
+      `Name: ${name}`,
+      `Email: ${email}`,
+      `Phone: ${phone}`,
+      '',
+      'Message:',
+      message,
+    ].join('\n'),
   });
 
-  const command = new SendEmailCommand({
-    Source: `${headerSafe(name)} <${FROM_EMAIL}>`,
-    ReplyToAddresses: [email],
-    Destination: {
-      ToAddresses: [TO_EMAIL],
-      CcAddresses: CC_EMAIL ? [CC_EMAIL] : [],
-    },
-    Message: {
-      Subject: {
-        Charset: 'UTF-8',
-        Data: `${EMAIL_SUBJECT || 'New website message'} from ${headerSafe(email)}`,
-      },
-      Body: {
-        Text: {
-          Charset: 'UTF-8',
-          Data: [
-            'You have a new message from your website contact form.',
-            '',
-            `Name: ${name}`,
-            `Email: ${email}`,
-            `Phone: ${phone}`,
-            '',
-            'Message:',
-            message,
-          ].join('\n'),
-        },
-      },
-    },
-  });
-
-  try {
-    await client.send(command);
-    return json({ message: 'Your message was sent successfully!' });
-  } catch (error) {
-    const { code, detail } = describeError(error);
+  if (error) {
     console.error(
-      `sendEmail: SES send failed [${code}] ${detail} (region=${AWS_REGION}, keyId=${AWS_ACCESS_KEY_ID.slice(0, 4)}…, from=${FROM_EMAIL}, to=${TO_EMAIL})`,
+      `sendEmail: Resend rejected the message [${error.name}] ${error.message} (from=${env.RESEND_FROM_EMAIL}, to=${env.CONTACT_TO_EMAIL})`,
     );
-    // The SES error name (e.g. MessageRejected, InvalidClientTokenId,
-    // AccessDenied) is safe to return and makes the failure diagnosable
-    // from the browser without needing server logs.
-    return json({ error: 'Your message failed to send, please try again later.', code }, 502);
+    // The Resend error name (e.g. validation_error, missing_api_key) is safe
+    // to return and makes the failure diagnosable from the browser.
+    return json({ error: 'Your message failed to send, please try again later.', code: error.name }, 502);
   }
+
+  console.log(`sendEmail: delivered via Resend (id=${data?.id ?? 'unknown'})`);
+  return json({ message: 'Your message was sent successfully!' });
 }
 
 export function GET() {
