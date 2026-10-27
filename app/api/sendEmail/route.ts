@@ -25,7 +25,11 @@ function json(body: { message?: string; error?: string; code?: string }, status 
 export async function POST(request: Request) {
   let body: Partial<TContactFormRequestBody>;
   try {
-    body = (await request.json()) as Partial<TContactFormRequestBody>;
+    const parsed: unknown = await request.json();
+    if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) {
+      return json({ error: 'Invalid request body.' }, 400);
+    }
+    body = parsed as Partial<TContactFormRequestBody>;
   } catch {
     return json({ error: 'Invalid request body.' }, 400);
   }

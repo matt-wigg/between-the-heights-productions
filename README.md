@@ -10,7 +10,13 @@ cp .env.example .env.local   # add the Resend key and recipient
 npm run dev                  # http://localhost:3000
 ```
 
-Other scripts: `npm run build`, `npm run start`, `npm run lint`, `npm run typecheck`.
+Use Node.js 24 LTS. Other scripts: `npm run build`, `npm run start`, `npm run lint`, `npm run typecheck`.
+
+## Dependency validation
+
+Run `npm ci`, `npm run lint`, `npm run typecheck`, `npm run build`, and `npm audit` before publishing updates. Start the production build with `npm start`, then run `npm run test:smoke` in another terminal. Set `BASE_URL` to check a deployed site. Smoke tests only submit invalid contact requests and never send email.
+
+As of October 27, 2026, ESLint stays at 9.39.5 because the latest `eslint-plugin-react` and `eslint-plugin-import` used by Next.js do not declare ESLint 10 compatibility. TypeScript is updated to 6.0.3; TypeScript 7 is held because `typescript-eslint` requires TypeScript below 6.1.0. Recheck those upstream peer ranges before upgrading; do not bypass peer checks. Node type definitions follow the deployed Node 24 runtime rather than Node 26.
 
 ## Structure
 
